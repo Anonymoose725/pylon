@@ -3,4 +3,5 @@ learned.md
 __pycache__/
 *.pyc
 .venv/
-*.egg-info/
+*.egg-info/s
+/testing/internal/
