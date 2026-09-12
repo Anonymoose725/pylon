@@ -45,9 +45,10 @@ def add_item_to_set(item, items=set()):
         
     result = find_mutable_defaults(str(file))
         
-    assert result == [("add_item_to_list", 2),("add_item_to_set", 2)]
+    assert result == [("add_item_to_list", 2),("add_item_to_set", 6)] # counting the newline after """
     
 # fails - code does not catch set(). why?
+    # fixing after commit "test mutable default args"
     # set() is ast.Call, NOT ast.Set. 
     # this is because we're not using a set, we're actually using a function to initialize a new set
     # it IS a mutable default though: fix this!

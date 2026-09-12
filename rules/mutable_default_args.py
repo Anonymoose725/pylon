@@ -28,4 +28,10 @@ def find_mutable_defaults(filepath: str):
 
 def is_mutable(node):
     if isinstance(node, (ast.List, ast.Dict, ast.Set)):
+        # if its a direct object of one of our mutable types
         return True
+    if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+        # if its a call to a function with id belonging to one of our mutable types
+        # i.e. set(), which is an initialization returning an empty set
+        return node.func.id in ("list", "dict", "set")
+    return False
