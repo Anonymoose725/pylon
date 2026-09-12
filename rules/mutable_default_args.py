@@ -26,5 +26,6 @@ def find_mutable_defaults(filepath: str):
                     result.append((node.name, node.lineno))
     return result
 
-def is_mutable(obj):
-    return isinstance(obj, (ast.List, ast.Dict, ast.Set))
+def is_mutable(node):
+    if isinstance(node, (ast.List, ast.Dict, ast.Set)):
+        return True
