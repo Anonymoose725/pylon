@@ -1,0 +1,30 @@
+# def add_item(item, items=[]):
+#     items.append(item)
+#     return items
+# "if no list is passed, start with an empty list."
+# but in python, the same list is shared every time the function is called
+# this means the default list grows as it accumulates new items
+# avoid with ast detection!
+
+import ast
+
+def find_mutable_defaults(filepath: str):
+    """given a python file path, return a list of (function_name, line) for functions with mutable default arguments"""
+    with open(filepath) as f:
+        src = f.read()
+    tree = ast.parse(src)
+    
+    result = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef):
+            for default in node.args.defaults:
+                # args is an argument node
+                # args.defaults is a list of default values passed positionally
+                # check if default is a mutable literal  
+                if is_mutable(default):
+                    # ------------ func_name, line_number
+                    result.append((node.name, node.lineno))
+    return result
+
+def is_mutable(obj):
+    return isinstance(obj, (ast.List, ast.Dict, ast.Set))
