@@ -6,28 +6,6 @@
 
 import ast
 
-code = "x == True"
-tree = ast.parse(code)
-print(ast.dump(tree, indent=2))
-print("SPACE")
-code = "x is True"
-tree = ast.parse(code)
-print(ast.dump(tree, indent=2))
-print("SPACE")
-code = "x == 5"
-tree = ast.parse(code)
-print(ast.dump(tree, indent=2))
-print("SPACE")
-code = "5 == x"
-tree = ast.parse(code)
-print(ast.dump(tree, indent=2))
-print("SPACE")
-code = "x == True"
-tree = ast.parse(code)
-print(ast.dump(tree, indent=2))
-
-import ast
-
 def find_improper_compares(filepath: str):
     """given a python file path, return a list (module, lineno) of wilcard imports"""
     with open(filepath) as f:
