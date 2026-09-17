@@ -16,3 +16,28 @@ count the number of (length of []) `node.args.args` on `ast.FunctionDef`
 - Global variables state changed inside a function, using the `global` keyword inside the function to alter outer-scope variables. Often a hard to trace bug. Check for `ast.Global` nodes within functions.
 - Wildcard imports: `from module import *` is not healthy, check `ast.ImportFrom` where `node.names[0].name == "8"`
 - Heavily nested code, resulting in high complexity. A warning on program efficiency. With many while/if/for/try blocks nested, hard to read. Would need to track nesting depth and/or branch count while walking rather than at a single node. Involves breaking apart ast.walk().
+
+
+## Setup, for contributors:
+
+Clone the repo:
+```bash
+git clone https://github.com/<your-username>/pylon.git
+cd pylon
+```
+
+Create and activate virtual environments:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install dependencies from requirements.txt:
+```bash
+pip install -r requirements.txt
+```
+
+Run test suite to confirm everything works:
+```bash
+pytest testing/ -v
+```
