@@ -67,3 +67,25 @@ x == 5
     result = find_improper_compares(str(file))
 
     assert result == []
+
+def test_proper_expr_is_none(tmp_path):
+    code = """
+x is None
+"""
+    file = tmp_path / "sample.py"
+    file.write_text(code)
+
+    result = find_improper_compares(str(file))
+
+    assert result == []
+
+def test_improper_if_eq_none(tmp_path):
+    code = """
+if x == None: True
+"""
+    file = tmp_path / "sample.py"
+    file.write_text(code)
+
+    result = find_improper_compares(str(file))
+
+    assert result == [("Improper Use of \"==\"", 2)]
