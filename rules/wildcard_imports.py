@@ -11,7 +11,7 @@ def find_wildcard_imports(filepath: str):
         if isinstance(node, ast.ImportFrom):
             for name in node.names:
                 if name.name == "*":
-                    result.append((name.name, node.lineno))
+                    result.append((node.module, node.lineno))
                 # deliberately not using aliased names as these will always be '*'
     
-    return result   
+    return result
