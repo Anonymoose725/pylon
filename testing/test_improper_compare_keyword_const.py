@@ -11,7 +11,7 @@ x == True
 
     result = find_improper_compares(str(file))
 
-    assert result == [("Improper Use of \"==\"", 2)]
+    assert result == [2]
 
 def test_proper_expr_with_is(tmp_path):
     code = """
@@ -33,7 +33,7 @@ if x == True: True
 
     result = find_improper_compares(str(file))
 
-    assert result == [("Improper Use of \"==\"", 2)]
+    assert result == [2]
 
 def test_proper_if_with_is(tmp_path):
     code = """
@@ -88,4 +88,26 @@ if x == None: True
 
     result = find_improper_compares(str(file))
 
-    assert result == [("Improper Use of \"==\"", 2)]
+    assert result == [2]
+
+def test_improper_compare_multiple(tmp_path):
+    code = """
+def func1(x):
+    if x == None: 
+        return 1
+    else:
+        return 2
+
+def func2(y):
+    if y == None:
+        return 2
+    else:
+        return 1
+"""
+    file = tmp_path / "sample.py"
+    file.write_text(code)
+    
+    result = find_improper_compares(str(file))
+    
+    assert result == [3, 9]
+    

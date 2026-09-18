@@ -7,7 +7,7 @@
 import ast
 
 def find_improper_compares(filepath: str):
-    """given a python file path, return a list (module, lineno) of wilcard imports"""
+    """given a python file path, return a list [lineno] of improper comparisons using '==' rather than 'is' with keyword constants"""
     with open(filepath) as f:
         src = f.read()
     tree = ast.parse(src)
@@ -20,7 +20,7 @@ def find_improper_compares(filepath: str):
             compare_node_right = node.comparators[0]
             if isValidConst(compare_node_right) or isValidConst(compare_node_left):
                 if isinstance(compare_node_ops, ast.Eq):
-                    result.append(("Improper Use of \"==\"", node.lineno))
+                    result.append(node.lineno)
       
     return result
 
