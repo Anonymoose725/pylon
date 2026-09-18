@@ -2,7 +2,7 @@
 
 Pylon is a static analysis CLI for Python that flags real issues in your code and, on request, explains them and suggests fixes using an LLM.
 
-Pylon mostly utilises Python's included (ast module)[https://docs.python.org/3/library/ast.html] to traverse source code.
+Pylon mostly utilises Python's included [ast module](https://docs.python.org/3/library/ast.html) to traverse source code.
 
 ## List of rules to implement, so far
 
