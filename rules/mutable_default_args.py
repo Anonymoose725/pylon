@@ -5,10 +5,10 @@
 # but in python, the same list is shared every time the function is called
 # this means the default list grows as it accumulates new items
 # avoid with ast detection!
-
+from rules.base import Finding
 import ast
 
-def find_mutable_defaults(filepath: str):
+def find_mutable_defaults(filepath: str) -> list[Finding]:
     """given a python file path, return a list of (function_name, line) for functions with mutable default arguments"""
     with open(filepath) as f:
         src = f.read()
@@ -22,8 +22,11 @@ def find_mutable_defaults(filepath: str):
                 # args.defaults is a list of default values passed positionally
                 # check if default is a mutable literal  
                 if is_mutable(default):
-                    # ------------ func_name, line_number
-                    result.append((node.name, node.lineno))
+                    result.append(Finding(
+                        rule_id="mutable-default",
+                        message=f"Mutable default argument in function def '{node.name}'",
+                        line=node.lineno
+                    ))
     return result
 
 def is_mutable(node):

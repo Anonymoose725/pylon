@@ -1,4 +1,5 @@
 # run from project root
+from rules.base import Finding
 from rules.mutable_default_args import find_mutable_defaults
 
 def test_find_mutable_default_args(tmp_path):
@@ -12,7 +13,7 @@ def add_item(item, items=[]):
     
     result = find_mutable_defaults(str(file))
     
-    assert result == [("add_item", 2)]
+    assert result == [Finding(rule_id="mutable-default", message="Mutable default argument in function def 'add_item'", line=2)]
     
 def test_immutable_default_arg_not_flagged(tmp_path):
     code = """
@@ -45,4 +46,5 @@ def add_item_to_set(item, items=set()):
         
     result = find_mutable_defaults(str(file))
         
-    assert result == [("add_item_to_list", 2),("add_item_to_set", 6)] # counting the newline after """ in lineno
+    assert result == [Finding(rule_id="mutable-default", message="Mutable default argument in function def 'add_item_to_list'", line=2),
+                      Finding(rule_id="mutable-default", message="Mutable default argument in function def 'add_item_to_set'", line=6)]
