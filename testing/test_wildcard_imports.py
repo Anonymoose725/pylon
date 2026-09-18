@@ -1,4 +1,5 @@
 # testing/test_wildcard_imports.py
+from rules.base import Finding
 from rules.wildcard_imports import find_wildcard_imports
 
 
@@ -11,7 +12,7 @@ from os import *
 
     result = find_wildcard_imports(str(file))
 
-    assert result == [("os", 2)]
+    assert result == [Finding(rule_id="wildcard-import", message="Wildcard import from 'os'", line=2)]
 
 
 def test_no_wildcard_import_not_flagged(tmp_path):
@@ -36,7 +37,8 @@ from sys import *
 
     result = find_wildcard_imports(str(file))
 
-    assert result == [("os", 2), ("sys", 3)]
+    assert result == [Finding(rule_id="wildcard-import", message="Wildcard import from 'os'", line=2), 
+                      Finding(rule_id="wildcard-import", message="Wildcard import from 'sys'", line=3)]
 
 
 def test_regular_import_not_flagged(tmp_path):
