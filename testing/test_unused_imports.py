@@ -1,4 +1,5 @@
 # run from project root
+from rules.base import Finding
 from rules.unused_imports import find_unused_imports
 
 def test_detects_unused_imports(tmp_path):
@@ -14,7 +15,8 @@ print(os.getcwd())
     
     result = find_unused_imports(str(file))
     
-    assert result == {"sys", "Counter"}
+    assert result == [Finding(rule_id="unused-import", message="Unused import from 'sys'", line=3),
+                      Finding(rule_id="unused-import", message="Unused import from 'Counter'", line=4)]
 
 def test_all_imports_used(tmp_path):
     code = """
@@ -26,7 +28,7 @@ print(os.getcwd())
     
     result = find_unused_imports(str(file))
     
-    assert result == set()
+    assert result == []
     
 def test_no_imports(tmp_path):
     code = "print('hello')"
@@ -35,7 +37,7 @@ def test_no_imports(tmp_path):
     
     result = find_unused_imports(str(file))
     
-    assert result == set()
+    assert result == []
 
 def test_aliased_unused_imports(tmp_path):
     code = """
@@ -49,4 +51,4 @@ print(os.getcwd())
     
     result = find_unused_imports(str(file))
     
-    assert result == {"lumpy"}    
+    assert result == [Finding(rule_id="unused-import", message="Unused import from 'lumpy'", line=3)]
