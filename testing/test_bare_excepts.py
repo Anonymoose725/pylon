@@ -1,4 +1,5 @@
 from rules.bare_excepts import find_bare_excepts
+from rules.base import Finding
 
 def test_find_bare_except(tmp_path):
     code = """
@@ -13,7 +14,7 @@ except:
     
     result = find_bare_excepts(str(file))
     
-    assert result == [5]
+    assert result == [Finding(rule_id="bare-except", message="Bare except clause found in try block", line=5)]
     
 def test_find_all_bare_excepts(tmp_path):
     code = """
@@ -35,4 +36,5 @@ except:
     
     result = find_bare_excepts(str(file))
     
-    assert result == [5,12]
+    assert result == [Finding(rule_id="bare-except", message="Bare except clause found in try block", line=5),
+                      Finding(rule_id="bare-except", message="Bare except clause found in try block", line=12)]
