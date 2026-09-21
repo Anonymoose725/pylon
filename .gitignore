@@ -4,4 +4,9 @@ __pycache__/
 *.pyc
 .venv/
 *.egg-info/s
+
+
+# testing
 /testing/internal/
+.pytest_cache/
+.coverage
