@@ -9,7 +9,7 @@ from rules.base import Finding
 import ast
 
 def find_mutable_defaults(filepath: str) -> list[Finding]:
-    """given a python file path, return a list of (function_name, line) for functions with mutable default arguments"""
+    """given a python file path, return a list of Findings for functions with mutable default arguments"""
     with open(filepath) as f:
         src = f.read()
     tree = ast.parse(src)

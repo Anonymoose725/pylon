@@ -2,7 +2,7 @@ from rules.base import Finding
 import ast
 
 def find_unused_imports(filepath: str) -> list[Finding]:
-    """Given a Python file path, return a list of import names that are never used"""
+    """Given a Python file path, return a list of Findings, import names that are never used"""
     # get tree
     with open(filepath) as f:
         source = f.read() # string

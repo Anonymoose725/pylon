@@ -2,7 +2,7 @@ from rules.base import Finding
 import ast
 
 def find_wildcard_imports(filepath: str) -> list[Finding]:
-    """given a python file path, return a list (module, lineno) of wilcard imports"""
+    """given a python file path, return a list Findings of wilcard imports"""
     with open(filepath) as f:
         src = f.read()
     tree = ast.parse(src)
