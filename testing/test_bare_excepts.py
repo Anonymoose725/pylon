@@ -1,5 +1,6 @@
 from rules.bare_excepts import find_bare_excepts
 from rules.base import Finding
+from test_util import create_test_file
 
 def test_find_bare_except(tmp_path):
     code = """
@@ -9,8 +10,7 @@ try:
 except:
     print("This catches all exceptions!")    
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
     
     result = find_bare_excepts(str(file))
     
@@ -31,8 +31,7 @@ except ValueError:
 except:
     print("This is not!")
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
     
     result = find_bare_excepts(str(file))
     
