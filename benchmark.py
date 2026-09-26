@@ -37,9 +37,10 @@ def main():
         for file in files:
             for rule in ALL_RULES:
                 results = rule(str(file))
-                findings_this_repo += len(results)
-                for finding in results:
-                    per_rule_totals[finding.rule_id] = per_rule_totals.get(finding.rule_id, 0) + 1 # mapping +1
+                if results is not None:
+                    findings_this_repo += len(results)
+                    for finding in results:
+                        per_rule_totals[finding.rule_id] = per_rule_totals.get(finding.rule_id, 0) + 1 # mapping +1
                     
         elapsed = time.perf_counter() - start # record time taken to find all findings in this repo
         
