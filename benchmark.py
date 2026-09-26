@@ -8,7 +8,8 @@ REPOS = {
     "flask": "benchmarks/flask/src",
     "requests": "benchmarks/requests/src",
     "click": "benchmarks/click/src",
-    "django": "benchmarks/django/django"
+    "django": "benchmarks/django/django",
+    "numpy": "benchmarks/numpy/numpy"
 }
 
 def count_lines(files):
@@ -16,7 +17,7 @@ def count_lines(files):
     for f in files:
         with open(f, encoding="utf-8", errors="ignore") as fh:
             total += sum(1 for _ in fh)
-        return total
+    return total
 
 def main():
     grand_total_files = 0
