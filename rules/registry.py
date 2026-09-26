@@ -1,4 +1,3 @@
-from rules.base import Finding
 from rules.bare_excepts import find_bare_excepts
 from rules.unused_imports import find_unused_imports
 from rules.mutable_default_args import find_mutable_defaults

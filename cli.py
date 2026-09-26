@@ -18,9 +18,6 @@ def find_python_files(filepath: str) -> list[Path]:
     return list(p.rglob("*.py")) # recursively search the directory
 
 
-
-
-
 @click.command()
 @click.argument("filepath")
 def check(filepath):
@@ -40,9 +37,10 @@ def check(filepath):
     if not all_findings: # if all_findings == []
         click.echo("No issues found! :)")
         return
-
-    for file, finding in sorted(all_findings, key=lambda pair: pair[1].line): # sorts by file by line number, with (file, _) used
-        click.echo(f"{file}:{finding.line}: [{finding.rule_id}] {finding.message}")
+    else: # all_findings != []
+        for file, finding in sorted(all_findings, key=lambda pair: pair[1].line): # sorts by file by line number, with (file, _) used
+            click.echo(f"{file}:{finding.line}: [{finding.rule_id}] {finding.message}")
+            raise SystemExit(1)
 
 if __name__ == "__main__":
     check()
