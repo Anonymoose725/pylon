@@ -1,6 +1,7 @@
 # run from project root
 from rules.base import Finding
 from rules.unused_imports import find_unused_imports
+from test_util import create_test_file
 
 def test_detects_unused_imports(tmp_path):
     code = """
@@ -10,8 +11,7 @@ from collections import Counter
 
 print(os.getcwd())
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
     
     result = find_unused_imports(str(file))
     
@@ -23,8 +23,7 @@ def test_all_imports_used(tmp_path):
 import os
 print(os.getcwd())
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
     
     result = find_unused_imports(str(file))
     
@@ -32,8 +31,7 @@ print(os.getcwd())
     
 def test_no_imports(tmp_path):
     code = "print('hello')"
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
     
     result = find_unused_imports(str(file))
     
@@ -46,8 +44,7 @@ import numpy as lumpy
 
 print(os.getcwd())
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
     
     result = find_unused_imports(str(file))
     
@@ -56,8 +53,7 @@ print(os.getcwd())
 def test_deliberate_re_export_unused_imports(tmp_path):
     code = "from .app import Flask as Flask\n"
     
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
     
     result = find_unused_imports(str(file))
     
@@ -71,8 +67,7 @@ from .app import Flask as Flask
 
 print(os.getcwd())
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
     
     result = find_unused_imports(str(file))
     

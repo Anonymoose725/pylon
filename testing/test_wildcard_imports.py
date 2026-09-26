@@ -1,14 +1,14 @@
 # testing/test_wildcard_imports.py
 from rules.base import Finding
 from rules.wildcard_imports import find_wildcard_imports
+from test_util import create_test_file
 
 
 def test_detects_wildcard_import(tmp_path):
     code = """
 from os import *
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_wildcard_imports(str(file))
 
@@ -19,8 +19,7 @@ def test_no_wildcard_import_not_flagged(tmp_path):
     code = """
 from os import path
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_wildcard_imports(str(file))
 
@@ -32,8 +31,7 @@ def test_multiple_wildcard_imports(tmp_path):
 from os import *
 from sys import *
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_wildcard_imports(str(file))
 
@@ -45,8 +43,7 @@ def test_regular_import_not_flagged(tmp_path):
     code = """
 import os
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_wildcard_imports(str(file))
 
