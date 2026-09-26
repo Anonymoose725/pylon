@@ -1,13 +1,12 @@
 # testing/improper_compare_keyword_const.py
 from rules.improper_compare_keyword_const import find_improper_compares
-
+from test_util import create_test_file
 
 def test_improper_expr_with_eq(tmp_path):
     code = """
 x == True
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
@@ -17,8 +16,7 @@ def test_proper_expr_with_is(tmp_path):
     code = """
 x is True
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
@@ -28,8 +26,7 @@ def test_improper_if_with_eq(tmp_path):
     code = """
 if x == True: True
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
@@ -39,8 +36,7 @@ def test_proper_if_with_is(tmp_path):
     code = """
 if x is True: True
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
@@ -50,8 +46,7 @@ def test_proper_if_without_is(tmp_path):
     code = """
 if x == 5: True
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
@@ -61,8 +56,7 @@ def test_proper_expr_without_is(tmp_path):
     code = """
 x == 5
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
@@ -72,8 +66,7 @@ def test_proper_expr_is_none(tmp_path):
     code = """
 x is None
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
@@ -83,8 +76,7 @@ def test_improper_if_eq_none(tmp_path):
     code = """
 if x == None: True
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
@@ -104,8 +96,7 @@ def func2(y):
     else:
         return 1
 """
-    file = tmp_path / "sample.py"
-    file.write_text(code)
+    file = create_test_file(tmp_path, code)
     
     result = find_improper_compares(str(file))
     
