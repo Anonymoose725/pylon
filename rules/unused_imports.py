@@ -14,6 +14,8 @@ def find_unused_imports(filepath: str) -> list[Finding]:
         if isinstance(node, (ast.Import, ast.ImportFrom)):
             for name in node.names:
                 # check if .name or .asname (import os || import os as opersys)
+                if name.asname is not None and name.asname == name.name:
+                    continue # skip for deliberate pattern "import X as "
                 imported[name.asname or name.name] = node.lineno
     
     # every time code references a name: os.path.join(), path.exists(),... parser creates ast.Name with .id attribute

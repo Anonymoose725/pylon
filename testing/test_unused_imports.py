@@ -52,3 +52,28 @@ print(os.getcwd())
     result = find_unused_imports(str(file))
     
     assert result == [Finding(rule_id="unused-import", message="Unused import from 'lumpy'", line=3)]
+    
+def test_deliberate_re_export_unused_imports(tmp_path):
+    code = "from .app import Flask as Flask\n"
+    
+    file = tmp_path / "sample.py"
+    file.write_text(code)
+    
+    result = find_unused_imports(str(file))
+    
+    assert result == []
+
+def test_re_export_and_positive_unused_imports(tmp_path):
+    code = """
+import os
+import sys
+from .app import Flask as Flask
+
+print(os.getcwd())
+"""
+    file = tmp_path / "sample.py"
+    file.write_text(code)
+    
+    result = find_unused_imports(str(file))
+    
+    assert result == [Finding(rule_id="unused-import", message="Unused import from 'sys'", line=3)]
