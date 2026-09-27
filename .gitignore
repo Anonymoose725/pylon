@@ -3,7 +3,7 @@ learned.md
 __pycache__/
 *.pyc
 .venv/
-*.egg-info/s
+*.egg-info/
 
 
 # testing

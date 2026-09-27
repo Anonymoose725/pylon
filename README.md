@@ -22,7 +22,16 @@ count the number of (length of []) `node.args.args` on `ast.FunctionDef`
 - Heavily nested code, resulting in high complexity. A warning on program efficiency. With many while/if/for/try blocks nested, hard to read. Would need to track nesting depth and/or branch count while walking rather than at a single node. Involves breaking apart ast.walk().
 
 
-## Setup, for contributors:
+## installation, in current non-published state from source code
+```bash
+git clone https://github.com/<you>/pylon.git
+cd pylon
+python3 -m venv .venv
+source .venv/bin/activate      # or .venv\Scripts\activate on Windows
+pip install -e .
+```
+
+## Detailed Setup, for contributors:
 
 Clone the repo:
 ```bash
