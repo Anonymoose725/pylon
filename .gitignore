@@ -12,3 +12,4 @@ __pycache__/
 .coverage
 /source_testing/
 /benchmarks/*
+!benchmarks/benchmarks.md
