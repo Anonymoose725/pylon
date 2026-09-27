@@ -11,3 +11,5 @@ __pycache__/
 .pytest_cache/
 .coverage
 /source_testing/
+/benchmarks/*
+!/benchmarks/benchmarks.md
