@@ -37,3 +37,20 @@ except:
     
     assert result == [Finding(rule_id="bare-except", message="Bare except clause found in try block", line=5),
                       Finding(rule_id="bare-except", message="Bare except clause found in try block", line=12)]
+    
+def test_ignore_catch_and_re_raise(tmp_path):
+    code = """
+try:
+    val = 100
+    result = 10 / val
+except ZeroDivisionError:
+    print("cannot divide by zero")
+except:
+    print("something went wrong")
+    raise
+"""
+    file = create_test_file(tmp_path, code)
+    
+    result = find_bare_excepts(str(file))
+    
+    assert result == []
