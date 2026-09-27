@@ -1,6 +1,15 @@
 from rules.base import Finding
 import ast
 
+def all_string_literals(value_node):
+    """Pull string literals out of a list/tuple AST node — used for __all__ = [...]"""
+    names = set()
+    if isinstance(value_node, (ast.List, ast.Tuple)):
+        for elt in value_node.elts:
+            if isinstance(elt, ast.Constant) and isinstance(elt.value, str):
+                names.add(elt.value)
+    return names
+
 def find_unused_imports(filepath: str) -> list[Finding]:
     """Given a Python file path, return a list of Findings, import names that are never used"""
     # get tree
@@ -23,6 +32,18 @@ def find_unused_imports(filepath: str) -> list[Finding]:
     for node in ast.walk(tree):
         if isinstance(node, ast.Name):
             used_names.add(node.id)
+
+        # __all__ = list of strings
+        # names listed in __all__ = [...] or __all__ += [...] count as "used"
+        # this catches the re-export-via-__all__ idiom (e.g. in numpy's __init__.py),
+        # since those names never appear as an ast.Name, and only as string literals
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id == "__all__":
+                    used_names |= all_string_literals(node.value) # union
+        if isinstance(node, ast.AugAssign):
+            if isinstance(node.target, ast.Name) and node.target.id == "__all__":
+                used_names |= all_string_literals(node.value)
     
     # compare
     result = []
