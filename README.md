@@ -45,3 +45,22 @@ Run test suite to confirm everything works:
 ```bash
 pytest testing/ -v
 ```
+
+
+## On the roadmap
+
+1. Update bare-except to find a catch-and-reraise pattern. In testing the CLI, I found a bare except in Python-Flask's src/flask/app.py. This is deliberately placed and not a poor use of
+bare exception catching. Typically, following the pattern:
+```python
+except:
+    error = sys.exc_info()[1]
+    raise
+```
+so we can easily track and find except:...raise
+
+2. Double import patterns are not unused imports.
+```python
+from .app import Flask as Flask
+from .helpers import abort as abort
+```
+This is again deliberate and allows users of Flask to do `import Flask as Flask` as opposed to `import Flask.app as Flask`. We can check for this pattern!
