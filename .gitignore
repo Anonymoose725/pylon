@@ -13,3 +13,6 @@ __pycache__/
 /source_testing/
 /benchmarks/*
 !/benchmarks/benchmarks.md
+
+# env
+.env

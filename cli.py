@@ -4,6 +4,8 @@ from pathlib import Path
 from rules.registry import ALL_RULES
 from ai.providers import get_provider
 from ai.explain import explain_finding
+from dotenv import load_dotenv
+load_dotenv()
 
 def find_python_files(filepath: str) -> list[Path]:
     """Find all python files in a directory and return as list[Path]"""
