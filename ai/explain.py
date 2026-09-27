@@ -2,5 +2,5 @@
 from ai.providers.base import LLMProvider
 
 def explain(finding, source_snippet: str, provider: LLMProvider) -> str:
-    prompt = f"..." # the prompt to ask for clarirication goes here. optimize heavily.
+    prompt = f"..." # the prompt to ask for clarirication goes here. optimize heavily. TBD!
     return provider.complete(prompt)
