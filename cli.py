@@ -40,7 +40,7 @@ def check(filepath):
     else: # all_findings != []
         for file, finding in sorted(all_findings, key=lambda pair: pair[1].line): # sorts by file by line number, with (file, _) used
             click.echo(f"{file}:{finding.line}: [{finding.rule_id}] {finding.message}")
-            raise SystemExit(1)
+        raise SystemExit(1)
 
 if __name__ == "__main__":
     check()
