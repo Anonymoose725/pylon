@@ -72,3 +72,30 @@ print(os.getcwd())
     result = find_unused_imports(str(file))
     
     assert result == [Finding(rule_id="unused-import", message="Unused import from 'sys'", line=3)]
+    
+def test_all_double_underscore_marks_import_as_used(tmp_path):
+    code = """
+from .core import array
+from .core import ndarray
+
+__all__ = ["array", "ndarray"]
+"""
+    file = create_test_file(tmp_path, code)
+
+    result = find_unused_imports(str(file))
+
+    assert result == []
+
+def test_all_double_underscore_with_positive_unused_import(tmp_path):
+    code = """
+from .core import array
+from .core import ndarray
+import sys
+
+__all__ = ["array", "ndarray"]
+"""
+    file = create_test_file(tmp_path, code)
+
+    result = find_unused_imports(str(file))
+
+    assert result == [Finding(rule_id="unused-import", message="Unused import from 'sys'", line=4)]
