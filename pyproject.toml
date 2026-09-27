@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pylon"
+version = "0.1.0"
+description = "A static analysis CLI for Python scripts with various enhancements and layers"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["click"]
+
+[project.scripts]
+pylon = "cli:check"
+
+[tool.setuptools]
+packages = ["rules", "ai"]
