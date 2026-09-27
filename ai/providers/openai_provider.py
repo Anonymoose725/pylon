@@ -10,6 +10,6 @@ class OpenAIProvider(LLMProvider):
         response = self.client.chat.completions.create(
             model = self.model,
             stream = False,
-            message = [{"role": "user", "content": prompt}]
+            messages = [{"role": "user", "content": prompt}]
         )
-        return response.choice[0].message.content # no autofill on structure. could be wrong
+        return response.choices[0].message.content
