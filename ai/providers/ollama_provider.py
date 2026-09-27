@@ -7,7 +7,7 @@ class OllamaProvider(LLMProvider):
     
     def complete(self, prompt):
         response = requests.post(
-            "https://localhost:11434/api/generate", # post api endpoint
+            "http://localhost:11434/api/generate", # post api endpoint
             json={"model": self.model, "prompt": prompt, "stream": False} # dont stream since we want it to return one chunk
         )
         response.raise_for_status() # raises http error if one occurred

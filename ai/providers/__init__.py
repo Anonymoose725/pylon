@@ -1,7 +1,7 @@
 from ai.providers.base import LLMProvider
-from ai.providers.anthropic_provide import AnthropicProvider
-from ai.providers.ollama_provide import OllamaProvider
-from ai.providers.openai_provide import OpenAIProvider
+from ai.providers.anthropic_provider import AnthropicProvider
+from ai.providers.ollama_provider import OllamaProvider
+from ai.providers.openai_provider import OpenAIProvider
 
 def get_provider(name: str) -> LLMProvider:
     all_providers = {
