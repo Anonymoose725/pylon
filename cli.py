@@ -29,7 +29,13 @@ def get_snippet(filepath: Path, finding_line, margin = 25) -> str:
     first = max(0, finding_line - margin - 1) # -1 for from-zero indexing
     last = min(len(all_lines), finding_line + margin)
     
-    return "".join(all_lines[first:last]) # concatenate lines from first to last and return as a new string
+    snippet_lines = []
+    for i in range(first, last):
+        line_num = i + 1
+        prefix = "----> " if line_num == finding_line else "    "
+        snippet_lines.append(f"{prefix}{line_num}: {all_lines[i]}")
+    
+    return "".join(snippet_lines) # concatenate lines from first to last and return as a new string
 
 @click.command()
 @click.argument("filepath")
