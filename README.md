@@ -36,6 +36,8 @@ pylon path/to/file.py --explain --provider openai
 pylon path/to/file.py --explain # will use default ollama qwen2.5:7b-coder
 ```
 
+Note that users of openai/anthropic models should add their respective API keys to `.env.example` and then rename to `.env`
+
 ## Installation, in current non-published state from source code
 ```bash
 git clone https://github.com/Anonymoose725/pylon.git
