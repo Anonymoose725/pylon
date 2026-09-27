@@ -15,3 +15,4 @@ pylon = "cli:check"
 
 [tool.setuptools]
 packages = ["rules", "ai"]
+py-modules = ["cli"]
