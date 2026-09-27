@@ -24,6 +24,6 @@ def explain_finding(finding: Finding, source_snippet: str, provider: LLMProvider
     You must now explain to the user of the Python analyzer, in no more than 2-3 sentences, exactly the nature of the
     finding and just as importantly, whether or not this is likely a real issue or potentially a false positive by the static 
     analyzer. Do not be overconfident and do not hesitate. Be incredibly concise, and shorten some sentences like
-    'there is a high likelihood that this is a false positive because...' to 'likely a false positive as....'""" 
-    
+    'there is a high likelihood that this is a false positive because...' to 'likely a false positive as....'."""
+        
     return provider.complete(prompt)
