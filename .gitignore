@@ -3,7 +3,7 @@ learned.md
 __pycache__/
 *.pyc
 .venv/
-*.egg-info/s
+*.egg-info/
 
 
 # testing
@@ -13,3 +13,6 @@ __pycache__/
 /source_testing/
 /benchmarks/*
 !/benchmarks/benchmarks.md
+
+# env
+.env
