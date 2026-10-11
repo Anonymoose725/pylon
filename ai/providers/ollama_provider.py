@@ -2,7 +2,7 @@ import requests
 from ai.providers.base import LLMProvider
 
 class OllamaProvider(LLMProvider):
-    def __init__(self, model: str = "qwen2.5-coder:7b"):
+    def __init__(self, model: str = "qwen3.5:9b"):
         self.model = model
     
     def complete(self, prompt):
