@@ -12,8 +12,8 @@ __pycache__/
 .coverage
 /source_testing/
 /benchmarks/*
+/benchmarks/
 !/benchmarks/benchmarks.md
-CLAUDE.md
 
 # env
 .env
