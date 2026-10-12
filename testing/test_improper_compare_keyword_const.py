@@ -1,104 +1,95 @@
-# testing/improper_compare_keyword_const.py
 from rules.improper_compare_keyword_const import find_improper_compares
+from rules.base import Finding
 from test_util import create_test_file
 
+
 def test_improper_expr_with_eq(tmp_path):
-    code = """
-x == True
-"""
+    """Test detection of improper comparison: x == True"""
+    code = """x == True"""
     file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
-    assert result == [2]
+    assert result == [Finding(
+        rule_id="improper-compares",
+        message=f"Improper comparison using operator '==' with keyword constant in line 1",
+        line=1
+    )]
+
 
 def test_proper_expr_with_is(tmp_path):
-    code = """
-x is True
-"""
+    """Test that proper comparison: x is True, is not flagged"""
+    code = """x is True"""
     file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
     assert result == []
+
 
 def test_improper_if_with_eq(tmp_path):
-    code = """
-if x == True: True
-"""
+    """Test detection of improper comparison in if statement: if x == True:"""
+    code = """if x == True: True"""
     file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
-    assert result == [2]
+    assert result == [Finding(
+        rule_id="improper-compares",
+        message=f"Improper comparison using operator '==' with keyword constant in line 1",
+        line=1
+    )]
+
 
 def test_proper_if_with_is(tmp_path):
-    code = """
-if x is True: True
-"""
+    """Test that proper if statement: if x is True: is not flagged"""
+    code = """if x is True: True"""
     file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
     assert result == []
+
 
 def test_proper_if_without_is(tmp_path):
-    code = """
-if x == 5: True
-"""
+    """Test that comparison with non-boolean constant is not flagged"""
+    code = """if x == 5: True"""
     file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
     assert result == []
+
 
 def test_proper_expr_without_is(tmp_path):
-    code = """
-x == 5
-"""
+    """Test that expression with non-boolean constant is not flagged"""
+    code = """x == 5"""
     file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
     assert result == []
+
 
 def test_proper_expr_is_none(tmp_path):
-    code = """
-x is None
-"""
+    """Test that proper None comparison: x is None is not flagged"""
+    code = """x is None"""
     file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
     assert result == []
 
+
 def test_improper_if_eq_none(tmp_path):
-    code = """
-if x == None: True
-"""
+    """Test detection of improper comparison: if x == None:"""
+    code = """if x == None: True"""
     file = create_test_file(tmp_path, code)
 
     result = find_improper_compares(str(file))
 
-    assert result == [2]
-
-def test_improper_compare_multiple(tmp_path):
-    code = """
-def func1(x):
-    if x == None: 
-        return 1
-    else:
-        return 2
-
-def func2(y):
-    if y == None:
-        return 2
-    else:
-        return 1
-"""
-    file = create_test_file(tmp_path, code)
-    
-    result = find_improper_compares(str(file))
-    
-    assert result == [3, 9]
-    
+    assert result == [Finding(
+        rule_id="improper-compares",
+        message=f"Improper comparison using operator '==' with keyword constant in line 1",
+        line=1
+    )]

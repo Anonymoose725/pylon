@@ -1,17 +1,12 @@
-""" 
-- Comparing statements using `==` instead of `is` for None, True, False, etc. Check for `ast.Compare` nodes where one side is
-`ast.Constant` with value None, True, etc. and check the operator is `Eq` or `NotEq` 
-
-"""
-
+from rules.base import Finding
 import ast
 
-def find_improper_compares(filepath: str):
-    """given a python file path, return a list [lineno] of improper comparisons using '==' rather than 'is' with keyword constants"""
+def find_improper_compares(filepath: str) -> list[Finding]:
+    """given a python file path, return a list of Findings for improper comparisons using '==' rather than 'is' with keyword constants"""
     with open(filepath) as f:
         src = f.read()
     tree = ast.parse(src)
-    
+
     result = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Compare):
@@ -19,9 +14,13 @@ def find_improper_compares(filepath: str):
             compare_node_ops = node.ops[0]
             compare_node_right = node.comparators[0]
             if isValidConst(compare_node_right) or isValidConst(compare_node_left):
-                if isinstance(compare_node_ops, ast.Eq):
-                    result.append(node.lineno)
-      
+                if isinstance(compare_node_ops, (ast.Eq, ast.NotEq)):
+                    result.append(Finding(
+                        rule_id="improper-compares",
+                        message=f"Improper comparison using operator '{'!=' if isinstance(compare_node_ops, ast.NotEq) else '=='}' with keyword constant in line {node.lineno}",
+                        line=node.lineno
+                    ))
+
     return result
 
 def isValidConst(node):
