@@ -22,6 +22,8 @@ Built in collaboration with [Soham200613](https://github.com/Soham200613) and [G
 - **Unused function arguments**: parameters never referenced in the function body, often signaling incomplete refactoring. Same "walk and collect `ast.Name` usages" pattern as unused imports, applied per-function.
 - **Global variable mutation inside functions**: using `global` to mutate outer-scope state is a common source of hard-to-trace bugs. Check for `ast.Global` nodes within functions.
 - **Deeply nested code (high cyclomatic complexity)**: functions with many nested `if`/`for`/`while`/`try` blocks are hard to read and test. Requires tracking nesting depth/branch count while walking, rather than matching a single node type.
+- **Redefining function in same scope**: functions that are later redefined in the same scope silently shadow, hinting to dead code
+- **Format-string arg count mismatch**: `%` operator and `logging` calls with a mismatch in the number of format requests and args supplied
 
 ## LLM layer
 
