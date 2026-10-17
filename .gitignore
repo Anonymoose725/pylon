@@ -13,7 +13,7 @@ __pycache__/
 /source_testing/
 /benchmarks/*
 /benchmarks/
-benchmark.py
+!benchmark.py
 !/benchmarks/benchmarks.md
 
 # env
