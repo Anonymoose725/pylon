@@ -12,16 +12,18 @@ Built in collaboration with [Soham200613](https://github.com/Soham200613) and [G
 - **Mutable default arguments**: `def f(x=[])` shares the same object across every call, a classic source of hard-to-trace bugs. Catches both literal syntax (`[]`, `{}`) and constructor calls (`list()`, `dict()`, `set()`).
 - **Bare `except:` clauses**: catching all exceptions, including `KeyboardInterrupt` and `SystemExit`, silently swallows bugs. Recognizes and skips the deliberate catch-and-reraise pattern (`except: ... raise`), rather than flagging every bare except indiscriminately.
 - **Wildcard imports**: `from module import *` pollutes the namespace and makes it impossible to tell where a name came from.
-
+- **Comparing with `==` instead of `is` for `None`/`True`/`False`** — non-idiomatic and can misbehave with custom `__eq__`. Check `ast.Compare` nodes where one side is an `ast.Constant` with value `None`/`True`/`False` and the operator is `Eq`/`NotEq`.
+- **Shadowed funcions/methods/class definitions**: functions later shadowed without an @overload stub and other exceptions are silently shadowed by python
 
 ## Rules yet to be implemented
 
 - **Excessive function arguments**: functions with too many parameters are hard to maintain and often signal the function is doing too much.
 - **Shadowed builtins**: variables or parameters named `list`, `dict`, `id`, `type`, etc. silently shadow Python's builtins. Check `ast.arg` names and assignment targets against a known set of builtin names.
-- **Comparing with `==` instead of `is` for `None`/`True`/`False`** — non-idiomatic and can misbehave with custom `__eq__`. Check `ast.Compare` nodes where one side is an `ast.Constant` with value `None`/`True`/`False` and the operator is `Eq`/`NotEq`.
 - **Unused function arguments**: parameters never referenced in the function body, often signaling incomplete refactoring. Same "walk and collect `ast.Name` usages" pattern as unused imports, applied per-function.
 - **Global variable mutation inside functions**: using `global` to mutate outer-scope state is a common source of hard-to-trace bugs. Check for `ast.Global` nodes within functions.
 - **Deeply nested code (high cyclomatic complexity)**: functions with many nested `if`/`for`/`while`/`try` blocks are hard to read and test. Requires tracking nesting depth/branch count while walking, rather than matching a single node type.
+- **Redefining function in same scope**: functions that are later redefined in the same scope silently shadow, hinting to dead code
+- **Format-string arg count mismatch**: `%` operator and `logging` calls with a mismatch in the number of format requests and args supplied
 
 ## LLM layer
 
@@ -93,5 +95,6 @@ Validated against 5 actively maintained production codebases to confirm the tool
 ## Roadmap
 
 1. Implement the roadmap rules listed above!
-2. Add a false-positive flagging mechanism to the CLI, so users can mark findings as false positives, with and without having seen an `--explain` explanation first. This is the basis for measuring whether the LLM layer's context genuinely reduces false-positive flags in practice
-3. Publish to PyPI under a distinct package name (`pylon`/`pylon-cli` are already taken)
+2. Implement a --fat flag that assumes a user is testing on a large number of files/repos, compacting the large list of findings into a more digestible (and collapsible?) format, potentially outside the CLI
+3. Add a false-positive flagging mechanism to the CLI, so users can mark findings as false positives, with and without having seen an `--explain` explanation first. This is the basis for measuring whether the LLM layer's context genuinely reduces false-positive flags in practice
+4. Publish to PyPI under a distinct package name (`pylon`/`pylon-cli` are already taken)
