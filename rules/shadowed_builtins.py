@@ -8,7 +8,7 @@ BUILTIN_NAMES = frozenset(name for name in dir(builtins) if not name.startswith(
 
 
 def find_shadowed_builtins(filepath: str) -> list[Finding]:
-    """Find parameter and assignment names that shadow Python builtins."""
+    """Find bindings that shadow Python builtins."""
     with open(filepath) as f:
         tree = ast.parse(f.read())
 
@@ -18,6 +18,12 @@ def find_shadowed_builtins(filepath: str) -> list[Finding]:
             name = node.arg
         elif isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store):
             name = node.id
+        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            name = node.name
+        elif isinstance(node, ast.alias):
+            name = node.asname or node.name.split(".")[0]
+        elif isinstance(node, ast.ExceptHandler):
+            name = node.name
         else:
             continue
 
