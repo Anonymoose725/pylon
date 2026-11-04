@@ -39,7 +39,7 @@ pylon path/to/file.py --explain --provider openai
 pylon path/to/file.py --explain # will use default ollama qwen2.5:7b-coder
 ```
 
-Note that users of openai/anthropic models should add their respective API keys to `.env.example` and then rename to `.env`
+Note that users of OpenAI/Anthropic models should configure their API keys by following the [Configuration section](#-configuration-set-up-environment-variables) above.
 
 ## Installation, in current non-published state from source code
 
@@ -69,6 +69,28 @@ pip install -e ".[openai]"
 pip install -e ".[anthropic]"
 ```
 
+## ⚠️ Configuration: Set Up Environment Variables
+
+**After installation**, you'll need to configure environment variables for LLM API access:
+
+1. **Copy the example file**: Rename `.env.example` to `.env.local` first to review the template, then rename it to `.env`:
+   ```bash
+   cp .env.example .env.local  # Review what needs to be set
+   mv .env.local .env          # Now you can edit it safely
+   ```
+
+2. **Edit `.env`**: Add your API keys to the `.env` file:
+   ```bash
+   nano .env  # or use your preferred editor
+   ```
+
+3. **Load environment variables** (if your shell doesn't auto-source):
+   ```bash
+   source .env  # Linux/mac, or .venv\Scripts\activate.ps1 for Windows
+   ```
+
+> **Note**: `.env` is typically added to `.gitignore` to prevent committing sensitive API keys. Use `.env.local` as a template and always edit `.env` in your local environment.
+
 ## Detailed setup, for contributors
 
 Clone the repo:
@@ -92,6 +114,8 @@ Run the test suite to confirm everything works:
 ```bash
 pytest testing/ -v
 ```
+
+**Optional**: Configure LLM API keys by following the [Configuration section](#-configuration-set-up-environment-variables). The tests will run with Ollama by default (no API keys needed) unless you've installed other providers and set up `.env`.
 
 ## Milestones & metrics
 
