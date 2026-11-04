@@ -21,3 +21,6 @@ benchmark.py
 
 # mac
 .DS_Store
+
+# ai tool ignore
+.claude
