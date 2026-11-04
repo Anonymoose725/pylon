@@ -15,10 +15,11 @@ Built in collaboration with [Soham200613](https://github.com/Soham200613) and [G
 - **Comparing with `==` instead of `is` for `None`/`True`/`False`** — non-idiomatic and can misbehave with custom `__eq__`. Check `ast.Compare` nodes where one side is an `ast.Constant` with value `None`/`True`/`False` and the operator is `Eq`/`NotEq`.
 - **Shadowed funcions/methods/class definitions**: functions later shadowed without an @overload stub and other exceptions are silently shadowed by python
 
+- **Shadowed builtins**: parameters and variable bindings named `list`, `dict`, `id`, `type`, etc. hide Python's builtins. Attribute names and ordinary builtin references are not flagged.
+
 ## Rules yet to be implemented
 
 - **Excessive function arguments**: functions with too many parameters are hard to maintain and often signal the function is doing too much.
-- **Shadowed builtins**: variables or parameters named `list`, `dict`, `id`, `type`, etc. silently shadow Python's builtins. Check `ast.arg` names and assignment targets against a known set of builtin names.
 - **Unused function arguments**: parameters never referenced in the function body, often signaling incomplete refactoring. Same "walk and collect `ast.Name` usages" pattern as unused imports, applied per-function.
 - **Global variable mutation inside functions**: using `global` to mutate outer-scope state is a common source of hard-to-trace bugs. Check for `ast.Global` nodes within functions.
 - **Deeply nested code (high cyclomatic complexity)**: functions with many nested `if`/`for`/`while`/`try` blocks are hard to read and test. Requires tracking nesting depth/branch count while walking, rather than matching a single node type.
@@ -38,16 +39,57 @@ pylon path/to/file.py --explain --provider openai
 pylon path/to/file.py --explain # will use default ollama qwen2.5:7b-coder
 ```
 
-Note that users of openai/anthropic models should add their respective API keys to `.env.example` and then rename to `.env`
+Note that users of OpenAI/Anthropic models should configure their API keys by following the [Configuration section](#-configuration-set-up-environment-variables) above.
 
 ## Installation, in current non-published state from source code
+
 ```bash
 git clone https://github.com/Anonymoose725/pylon.git
 cd pylon
 python3 -m venv .venv
 source .venv/bin/activate # for linux/mac, or .venv\Scripts\activate on Windows
-pip install -e .
+pip install -r requirements.txt
 ```
+
+### Minimal install (Ollama only, no API keys required)
+```bash
+pip install -e ".[ollama]"
+```
+
+### Full install with all LLM providers
+```bash
+pip install -e ".[llm-all]"
+```
+
+### Or install specific providers
+```bash
+# Just OpenAI
+pip install -e ".[openai]"
+# Just Anthropic  
+pip install -e ".[anthropic]"
+```
+
+## ⚠️ Configuration: Set Up Environment Variables
+
+**After installation**, you'll need to configure environment variables for LLM API access:
+
+1. **Copy the example file**: Rename `.env.example` to `.env.local` first to review the template, then rename it to `.env`:
+   ```bash
+   cp .env.example .env.local  # Review what needs to be set
+   mv .env.local .env          # Now you can edit it safely
+   ```
+
+2. **Edit `.env`**: Add your API keys to the `.env` file:
+   ```bash
+   nano .env  # or use your preferred editor
+   ```
+
+3. **Load environment variables** (if your shell doesn't auto-source):
+   ```bash
+   source .env  # Linux/mac, or .venv\Scripts\activate.ps1 for Windows
+   ```
+
+> **Note**: `.env` is typically added to `.gitignore` to prevent committing sensitive API keys. Use `.env.local` as a template and always edit `.env` in your local environment.
 
 ## Detailed setup, for contributors
 
@@ -72,6 +114,8 @@ Run the test suite to confirm everything works:
 ```bash
 pytest testing/ -v
 ```
+
+**Optional**: Configure LLM API keys by following the [Configuration section](#-configuration-set-up-environment-variables). The tests will run with Ollama by default (no API keys needed) unless you've installed other providers and set up `.env`.
 
 ## Milestones & metrics
 

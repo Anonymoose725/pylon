@@ -2,12 +2,14 @@ from ai.providers.base import LLMProvider
 from ai.providers.anthropic_provider import AnthropicProvider
 from ai.providers.ollama_provider import OllamaProvider
 from ai.providers.openai_provider import OpenAIProvider
+from ai.providers.google_provider import GoogleProvider
 
 def get_provider(name: str) -> LLMProvider:
     all_providers = {
         "ollama": OllamaProvider,
         "anthropic": AnthropicProvider,
-        "openai": OpenAIProvider
+        "openai": OpenAIProvider,
+        "google": GoogleProvider
     }
     
     if name not in all_providers:
