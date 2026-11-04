@@ -8,7 +8,17 @@ version = "0.1.0"
 description = "A static analysis CLI for Python scripts with various enhancements and layers"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["click", "requests", "anthropic", "openai", "python-dotenv"]
+dependencies = ["click", "requests", "python-dotenv"]
+
+[project.optional-dependencies]
+# Ollama: local models, free, no API key required
+ollama = ["anthropic"]  # anthropic also works for ollama (just points to local server)
+# OpenAI provider
+openai = ["openai"]
+# Anthropic provider  
+anthropic = ["anthropic"]
+# All LLM providers
+llm-all = ["anthropic", "openai"]
 
 [project.scripts]
 pylon = "cli:check"

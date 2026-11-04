@@ -42,7 +42,7 @@ def get_snippet(filepath: Path, finding_line, margin = 25) -> str:
 @click.command()
 @click.argument("filepath")
 @click.option("--explain", is_flag=True, help="Generate LLM explanations for each finding, using surrounding context.") # explain flag calls LLM layer
-@click.option("--provider", default="ollama", help="LLM provider for --explain (ollama, anthropic, openai)")
+@click.option("--provider", default="ollama", help="LLM provider for --explain: ollama (local, included), anthropic (requires [anthropic] extra), openai (requires [openai] extra)")
 def check(filepath, explain, provider):
     """Run all Pylon validation rules on the specified Python file or directory and print findings with LLM insight if explaining."""
     files = find_python_files(filepath)

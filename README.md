@@ -42,13 +42,31 @@ pylon path/to/file.py --explain # will use default ollama qwen2.5:7b-coder
 Note that users of openai/anthropic models should add their respective API keys to `.env.example` and then rename to `.env`
 
 ## Installation, in current non-published state from source code
+
 ```bash
 git clone https://github.com/Anonymoose725/pylon.git
 cd pylon
 python3 -m venv .venv
 source .venv/bin/activate # for linux/mac, or .venv\Scripts\activate on Windows
 pip install -r requirements.txt
-pip install -e .
+```
+
+### Minimal install (Ollama only, no API keys required)
+```bash
+pip install -e ".[ollama]"
+```
+
+### Full install with all LLM providers
+```bash
+pip install -e ".[llm-all]"
+```
+
+### Or install specific providers
+```bash
+# Just OpenAI
+pip install -e ".[openai]"
+# Just Anthropic  
+pip install -e ".[anthropic]"
 ```
 
 ## Detailed setup, for contributors
