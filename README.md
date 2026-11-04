@@ -47,6 +47,7 @@ git clone https://github.com/Anonymoose725/pylon.git
 cd pylon
 python3 -m venv .venv
 source .venv/bin/activate # for linux/mac, or .venv\Scripts\activate on Windows
+pip install -r requirements.txt
 pip install -e .
 ```
 
