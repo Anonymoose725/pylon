@@ -17,8 +17,10 @@ ollama = ["anthropic"]  # anthropic also works for ollama (just points to local 
 openai = ["openai"]
 # Anthropic provider  
 anthropic = ["anthropic"]
+# Google provider
+google-genai = ["google"]
 # All LLM providers
-llm-all = ["anthropic", "openai"]
+llm-all = ["anthropic", "openai", "google-genai"]
 
 [project.scripts]
 pylon = "cli:check"
