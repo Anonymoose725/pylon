@@ -30,12 +30,13 @@ Built in collaboration with [Soham200613](https://github.com/Soham200613) and [G
 
 Passing `--explain` sends each finding, along with its surrounding source code, to an LLM for a short, specific judgment on whether it's a genuine issue or a likely false positive. This is deliberately kept separate from the deterministic rule engine: rules encode patterns worth hard-coding that have few special deliberate cases, while the LLM layer handles judgment calls that don't generalize cleanly into a fixed rule. For example, correctly identifying that an unused `from __future__ import annotations` import is not actually dead code, despite never appearing as a referenced name in its respective file.
 
-Supports multiple providers behind a shared interface — local models via [ollama](https://ollama.com) for fast, free iteration, or Anthropic/OpenAI for production-quality explanations:
+Supports multiple providers behind a shared interface, local models via [ollama](https://ollama.com) for fast, free iteration, or Anthropic/OpenAI for production-quality explanations:
 
 ```bash
 pylon path/to/file.py --explain --provider ollama   # default
 pylon path/to/file.py --explain --provider anthropic
 pylon path/to/file.py --explain --provider openai
+pylon path/to/file.py --explain --provider google
 pylon path/to/file.py --explain # will use default ollama qwen2.5:7b-coder
 ```
 
@@ -67,6 +68,8 @@ pip install -e ".[llm-all]"
 pip install -e ".[openai]"
 # Just Anthropic  
 pip install -e ".[anthropic]"
+# Just Google
+pip install -e ".[google-genai]"
 ```
 
 ## ⚠️ Configuration: Set Up Environment Variables
