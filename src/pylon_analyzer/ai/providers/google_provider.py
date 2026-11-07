@@ -1,5 +1,5 @@
 from google import genai
-from ai.providers.base import LLMProvider
+from pylon_analyzer.ai.providers.base import LLMProvider
 
 class GoogleProvider(LLMProvider):
     def __init__(self, model: str = "gemini-3.6-flash"):

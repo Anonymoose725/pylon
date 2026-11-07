@@ -41,7 +41,27 @@ pylon path/to/file.py --explain # will use default ollama qwen2.5:7b-coder
 
 Note that users of OpenAI/Anthropic models should configure their API keys by following the [Configuration section](#-configuration-set-up-environment-variables) above.
 
-## Installation, in current non-published state from source code
+## Installation, as PyPI package
+
+
+Plain installation without external provider support ie. Ollama only
+```bash
+pip install pylon-analyzer
+```
+
+To install specific or all providers, 
+```bash
+# Just Anthropic
+pip install "pylon-analyzer[anthropic]"
+# Just OpenAI
+pip install "pylon-analyzer[openai]"
+# Just Google
+pip install "pylon-analyzer[google]"
+# Full provider support
+pip install "pylon-analyzer[llm-all]"
+```
+
+## Installation, from source
 
 ```bash
 git clone https://github.com/Anonymoose725/pylon.git

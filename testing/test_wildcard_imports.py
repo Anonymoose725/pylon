@@ -1,6 +1,6 @@
 # testing/test_wildcard_imports.py
-from rules.base import Finding
-from rules.wildcard_imports import find_wildcard_imports
+from pylon_analyzer.rules.base import Finding
+from pylon_analyzer.rules.wildcard_imports import find_wildcard_imports
 from test_util import create_test_file
 
 

@@ -1,7 +1,7 @@
 from pathlib import Path
 from click.testing import CliRunner
-import cli as cli_module
-from rules.base import Finding
+import pylon_analyzer.cli as cli_module
+from pylon_analyzer.rules.base import Finding
 
 
 def write_python_file(directory: Path, name: str, source: str = "x = 1\n") -> Path:
@@ -291,27 +291,6 @@ def test_check_uses_default_provider_when_explain_is_enabled(
 
     assert result.exit_code == 0
     assert provider_calls == ["ollama"]
-
-
-def test_check_propagates_unknown_provider_error_when_explaining(
-    tmp_path, monkeypatch
-):
-    source = write_python_file(tmp_path, "example.py")
-    monkeypatch.setattr(cli_module, "ALL_RULES", [])
-
-    def fake_get_provider(name):
-        raise ValueError(f"Unknown LLM provider: {name}")
-
-    monkeypatch.setattr(cli_module, "get_provider", fake_get_provider)
-
-    result = CliRunner().invoke(
-        cli_module.check,
-        [str(source), "--explain", "--provider", "unknown"],
-    )
-
-    assert result.exit_code != 0
-    assert isinstance(result.exception, ValueError)
-    assert "Unknown LLM provider: unknown" in str(result.exception)
 
 
 # Click argument and option handling

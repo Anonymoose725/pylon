@@ -1,5 +1,5 @@
-from rules.base import Finding
-from rules.shadowed_functions import find_shadowed_functions
+from pylon_analyzer.rules.base import Finding
+from pylon_analyzer.rules.shadowed_functions import find_shadowed_functions
 from test_util import create_test_file
 
 # test helpers ---------

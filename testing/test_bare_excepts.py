@@ -1,5 +1,5 @@
-from rules.bare_excepts import find_bare_excepts
-from rules.base import Finding
+from pylon_analyzer.rules.bare_excepts import find_bare_excepts
+from pylon_analyzer.rules.base import Finding
 from test_util import create_test_file
 
 def test_find_bare_except(tmp_path):
