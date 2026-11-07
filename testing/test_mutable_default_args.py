@@ -1,6 +1,6 @@
 # run from project root
-from rules.base import Finding
-from rules.mutable_default_args import find_mutable_defaults
+from pylon_analyzer.rules.base import Finding
+from pylon_analyzer.rules.mutable_default_args import find_mutable_defaults
 from test_util import create_test_file
 
 def test_find_mutable_default_args(tmp_path):

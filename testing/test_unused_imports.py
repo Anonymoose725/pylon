@@ -1,6 +1,6 @@
 # run from project root
-from rules.base import Finding
-from rules.unused_imports import find_unused_imports
+from pylon_analyzer.rules.base import Finding
+from pylon_analyzer.rules.unused_imports import find_unused_imports
 from test_util import create_test_file
 
 def test_detects_unused_imports(tmp_path):

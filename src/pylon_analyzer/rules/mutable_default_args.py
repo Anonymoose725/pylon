@@ -5,7 +5,7 @@
 # but in python, the same list is shared every time the function is called
 # this means the default list grows as it accumulates new items
 # avoid with ast detection!
-from rules.base import Finding
+from pylon_analyzer.rules.base import Finding
 import ast
 
 def find_mutable_defaults(filepath: str) -> list[Finding]:

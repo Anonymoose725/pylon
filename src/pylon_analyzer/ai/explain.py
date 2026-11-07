@@ -1,6 +1,6 @@
 # explain.py receives a response regardless of the LLM provider of choice
-from ai.providers.base import LLMProvider
-from rules.base import Finding
+from pylon_analyzer.ai.providers.base import LLMProvider
+from pylon_analyzer.rules.base import Finding
 
 def explain_finding(finding: Finding, source_snippet: str, provider: LLMProvider) -> str:
     """Explain a finding using an LLM and return its response, runnning Prompt V1"""

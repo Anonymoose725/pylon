@@ -1,4 +1,4 @@
-from rules.base import Finding
+from pylon_analyzer.rules.base import Finding
 import ast
 
 KIND = {

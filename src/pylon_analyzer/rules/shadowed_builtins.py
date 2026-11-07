@@ -1,7 +1,7 @@
 import ast
 import builtins
 
-from rules.base import Finding
+from pylon_analyzer.rules.base import Finding
 
 
 BUILTIN_NAMES = frozenset(name for name in dir(builtins) if not name.startswith('_'))

@@ -1,5 +1,5 @@
 import anthropic
-from ai.providers.base import LLMProvider
+from pylon_analyzer.ai.providers.base import LLMProvider
 
 class AnthropicProvider(LLMProvider):
     def __init__(self, model: str = "claude-sonnet-5"): # maybe opus is better?

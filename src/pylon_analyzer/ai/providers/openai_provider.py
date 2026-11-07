@@ -1,5 +1,5 @@
 from openai import OpenAI
-from ai.providers.base import LLMProvider
+from pylon_analyzer.ai.providers.base import LLMProvider
 
 class OpenAIProvider(LLMProvider):
     def __init__(self, model: str = "gpt-5.5"):

@@ -1,5 +1,5 @@
-from rules.improper_compare_keyword_const import find_improper_compares
-from rules.base import Finding
+from pylon_analyzer.rules.improper_compare_keyword_const import find_improper_compares
+from pylon_analyzer.rules.base import Finding
 from test_util import create_test_file
 
 

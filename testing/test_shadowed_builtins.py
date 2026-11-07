@@ -1,7 +1,7 @@
 import pytest
 
-from rules.base import Finding
-from rules.shadowed_builtins import find_shadowed_builtins
+from pylon_analyzer.rules.base import Finding
+from pylon_analyzer.rules.shadowed_builtins import find_shadowed_builtins
 from test_util import create_test_file
 
 

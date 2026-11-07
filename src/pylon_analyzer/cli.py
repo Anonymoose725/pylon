@@ -1,11 +1,11 @@
 # https://click.palletsprojects.com/en/stable/
 import click
 from pathlib import Path
-from rules.registry import ALL_RULES
-from ai.providers import get_provider
-from ai.explain import explain_finding
-from dotenv import load_dotenv
-load_dotenv()
+from pylon_analyzer.rules.registry import ALL_RULES
+from pylon_analyzer.ai.providers import get_provider
+from pylon_analyzer.ai.explain import explain_finding
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv(usecwd=True)) # use cwd to find envs
 
 def find_python_files(filepath: str) -> list[Path]:
     """Find all python files in a directory and return as list[Path]"""
@@ -42,14 +42,17 @@ def get_snippet(filepath: Path, finding_line, margin = 25) -> str:
 @click.command()
 @click.argument("filepath")
 @click.option("--explain", is_flag=True, help="Generate LLM explanations for each finding, using surrounding context.") # explain flag calls LLM layer
-@click.option("--provider", default="ollama", help="LLM provider for --explain: ollama (local, included), anthropic (requires [anthropic] extra), openai (requires [openai] extra), google (requires [google] extra)")
+@click.option("--provider", default="ollama", help="LLM provider for --explain: ollama (local, included), anthropic (requires [anthropic] extra), openai (requires [openai] extra), google (requires [google-genai] extra)")
 def check(filepath, explain, provider):
     """Run all Pylon validation rules on the specified Python file or directory and print findings with LLM insight if explaining."""
     files = find_python_files(filepath)
     click.echo(f"Validating {len(files)} file(s)...")
     
-    llm = get_provider(provider) if explain else None # dont fill if not explaining. here rather than in 'if explain' so it isnt recomputed
-
+    try:
+        llm = get_provider(provider) if explain else None # dont fill if not explaining. here rather than in 'if explain' so it isnt recomputed
+    except (ValueError, ImportError) as e:
+        raise click.ClickException(str(e)) # carry raise as a click exception
+    
     all_findings = []
     for file in files:
         for rule in ALL_RULES:

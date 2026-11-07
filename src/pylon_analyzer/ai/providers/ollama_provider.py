@@ -1,5 +1,5 @@
 import requests
-from ai.providers.base import LLMProvider
+from pylon_analyzer.ai.providers.base import LLMProvider
 
 class OllamaProvider(LLMProvider):
     def __init__(self, model: str = "qwen2.5-coder:7b"):
