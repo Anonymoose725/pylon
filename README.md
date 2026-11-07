@@ -89,7 +89,7 @@ pip install -e ".[openai]"
 pip install -e ".[anthropic]"
 ```
 
-## ⚠️ Configuration: Set Up Environment Variables
+## Configuration: Set Up Environment Variables
 
 **After installation**, you'll need to configure environment variables for LLM API access:
 
@@ -108,8 +108,6 @@ pip install -e ".[anthropic]"
    ```bash
    source .env  # Linux/mac, or .venv\Scripts\activate.ps1 for Windows
    ```
-
-> **Note**: `.env` is typically added to `.gitignore` to prevent committing sensitive API keys. Use `.env.local` as a template and always edit `.env` in your local environment.
 
 ## Detailed setup, for contributors
 
@@ -154,11 +152,10 @@ Validated against 5 actively maintained production codebases to confirm the tool
 - **Correctly identified a genuine bare-except anti-pattern** in Flask's core WSGI dispatch logic (`app.py`), then refined the rule to distinguish safe catch-and-reraise handlers from true error suppression via AST-level exception analysis
 - **Processes ~365 files/sec** (Django) and remains performant on dense, large codebases (~83 files/sec on NumPy's 260K-line source tree due to larger file sizes)
 - Every rule is covered by positive *and* negative test cases (`pytest`) — proving each rule catches real issues without false-flagging safe, idiomatic code
-
+- Uploaded to PyPI, where now users can 'pip install pylon-analyzer' on any system!
 
 ## Roadmap
 
 1. Implement the roadmap rules listed above!
 2. Implement a --fat flag that assumes a user is testing on a large number of files/repos, compacting the large list of findings into a more digestible (and collapsible?) format, potentially outside the CLI
 3. Add a false-positive flagging mechanism to the CLI, so users can mark findings as false positives, with and without having seen an `--explain` explanation first. This is the basis for measuring whether the LLM layer's context genuinely reduces false-positive flags in practice
-4. Publish to PyPI under a distinct package name (`pylon`/`pylon-cli` are already taken)
