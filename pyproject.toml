@@ -18,7 +18,7 @@ openai = ["openai"]
 # Anthropic provider  
 anthropic = ["anthropic"]
 # Google provider
-google-genai = ["google"]
+google-genai = ["google-genai"]
 # All LLM providers
 llm-all = ["anthropic", "openai", "google-genai"]
 
