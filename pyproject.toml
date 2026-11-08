@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pylon-analyzer"
-version = "0.1.1"
+version = "0.1.2"
 description = "A static analysis CLI for Python scripts with various enhancements and an LLM layer"
 readme = "README.md"
 requires-python = ">=3.10"
