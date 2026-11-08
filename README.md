@@ -25,6 +25,7 @@ Built in collaboration with [Soham200613](https://github.com/Soham200613) and [G
 - **Deeply nested code (high cyclomatic complexity)**: functions with many nested `if`/`for`/`while`/`try` blocks are hard to read and test. Requires tracking nesting depth/branch count while walking, rather than matching a single node type.
 - **Redefining function in same scope**: functions that are later redefined in the same scope silently shadow, hinting to dead code
 - **Format-string arg count mismatch**: `%` operator and `logging` calls with a mismatch in the number of format requests and args supplied
+- many more to find!
 
 ## LLM layer
 
